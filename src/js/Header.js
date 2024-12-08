@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navbar } from 'react-bootstrap';
 
-const LOGO = require('../../assets/logo.ico');
-import { getPaddingStyle } from '../utils/style';
+const LOGO = require('../assets/logo.ico');
+import { getPaddingStyle } from './utils/style';
 
 const TITLE = 'React Games';
 
