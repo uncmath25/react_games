@@ -8,7 +8,7 @@ import { getPaddingStyle } from '../../utils/style';
 const GAME_STATE_PLAYING = 'Playing...';
 const GAME_STATE_GAME_OVER = 'Game Over!';
 const GAME_STATE_WON = 'Victory!';
-const NEW_GAME_BUTTON_LABEL = 'New Game';
+const NEW_GAME_BUTTON_LABEL = 'Reset';
 
 export default function App() {
     const [isGameOver, setIsGameOver] = useState(false);
@@ -18,26 +18,7 @@ export default function App() {
     useEffect(() => {
         if (isGameOver) { return; }
         function handleKeyDown(e) {
-            var move = "";
-            switch(e.key) {
-                case 'ArrowLeft':
-                case 'a':
-                    move = MOVE_LEFT;
-                    break;
-                case 'ArrowRight':
-                case 'd':
-                    move = MOVE_RIGHT;
-                    break;
-                case 'ArrowDown':
-                case 's':
-                    move = MOVE_DOWN;
-                    break;
-                case 'ArrowUp':
-                case 'w':
-                    move = MOVE_UP;
-                    break;
-            }
-            setMove(move);
+            setMove(getMoveFromKey(e.key));
         }
         document.addEventListener('keydown', handleKeyDown);
         return function cleanup() {
@@ -45,6 +26,7 @@ export default function App() {
         }
     }, [isGameOver]);
     useEffect(() => {
+        console.log(board);
         if (move == "") { return; }
         const newBoard = update(board, move);
         setBoard(newBoard);
@@ -56,6 +38,24 @@ export default function App() {
         }
         setMove("");
     }, [move]);
+    const getMoveFromKey = (key) => {
+        switch(key) {
+            case 'ArrowLeft':
+            case 'a':
+                return MOVE_LEFT;
+            case 'ArrowRight':
+            case 'd':
+                return MOVE_RIGHT;
+            case 'ArrowDown':
+            case 's':
+                return MOVE_DOWN;
+            case 'ArrowUp':
+            case 'w':
+                return MOVE_UP;
+            default:
+                return "";
+        }
+    };
     const resetGame = () => {
         setIsGameOver(false);
         setWonGame(false);

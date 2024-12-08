@@ -31,5 +31,6 @@ build: clean
 
 deploy: build
 	@echo "*** Deploying React production app... ***"
+	ssh $(REMOTE_SERVER_PROFILE) "rm -rf $(REMOTE_PARENT_WEBSITE_DIR)"
 	scp -r $(BUILD_FOLDER) $(REMOTE_SERVER_PROFILE):$(REMOTE_PARENT_WEBSITE_DIR)
 	@echo "*** Ensure that the nginx.conf is appended to the server's nginx.conf and restart the server's nginx ***"
