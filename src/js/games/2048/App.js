@@ -3,7 +3,7 @@ import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 
 import Board from './components/Board';
 import { init, isBoardFull, isGameWon, update, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN, MOVE_UP } from './utils/board';
-import { getPaddingStyle } from './utils/style';
+import { getPaddingStyle } from '../../utils/style';
 
 const GAME_STATE_PLAYING = 'Playing...';
 const GAME_STATE_GAME_OVER = 'Game Over!';

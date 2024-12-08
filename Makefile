@@ -1,11 +1,11 @@
 .PHONY: clean dev build deploy
 
-IMAGE_NAME="uncmath25/react-2048"
+IMAGE_NAME="uncmath25/react-games"
 PORT=3000
 BUILD_FOLDER="build"
-REMOTE_DIR_NAME="react_2048"
+REMOTE_DIR_NAME="games"
 REMOTE_SERVER_PROFILE="testinglab"
-REMOTE_PARENT_WEBSITE_DIR="/home/player1/websites/react_2048"
+REMOTE_PARENT_WEBSITE_DIR="/home/player1/websites/react_games"
 
 default: dev
 
@@ -31,5 +31,5 @@ build: clean
 
 deploy: build
 	@echo "*** Deploying React production app... ***"
-	scp -r $(BUILD_FILE) $(REMOTE_SERVER_PROFILE):$(REMOTE_PARENT_WEBSITE_DIR)
+	scp -r $(BUILD_FOLDER) $(REMOTE_SERVER_PROFILE):$(REMOTE_PARENT_WEBSITE_DIR)
 	@echo "*** Ensure that the nginx.conf is appended to the server's nginx.conf and restart the server's nginx ***"

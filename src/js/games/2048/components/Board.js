@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import SquareCell from './SquareCell';
 import { BOARD_SIZE } from '../utils/board';
 
-const CELL_PX_SIZE = 150;
+const CELL_PX_SIZE = 140;
 const CELL_FONT_SIZE = 72;
 const CELL_STYLE_PERC = 100 / BOARD_SIZE + '%';
 const CELL_STYLE = {

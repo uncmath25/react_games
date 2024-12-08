@@ -1,7 +1,7 @@
 {
-  "name": "react_2048",
+  "name": "react_games",
   "version": "1.0.0",
-  "description": "Provides client for the 2048 game",
+  "description": "Provides client for the react games",
   "author": "Colton Willig <coltonwillig@gmail.com>",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "react": "19.0.0",
     "react-bootstrap": "2.10.6",
     "react-dom": "19.0.0",
+    "react-router-dom": "7.0.2",
     "react-scripts": "5.0.1"
   },
   "browserslist": {

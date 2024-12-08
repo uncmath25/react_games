@@ -1,4 +1,4 @@
-import { getRandomInt } from './util';
+import { getRandomInt } from './random';
 
 export const BOARD_SIZE = 4;
 export const WIN_VALUE = 32;
