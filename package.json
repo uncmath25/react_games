@@ -1,0 +1,31 @@
+{
+  "name": "react_2048",
+  "version": "1.0.0",
+  "description": "Provides client for the 2048 game",
+  "author": "Colton Willig <coltonwillig@gmail.com>",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "dependencies": {
+    "bootstrap": "5.3.3",
+    "dotenv": "16.4.7",
+    "react": "19.0.0",
+    "react-bootstrap": "2.10.6",
+    "react-dom": "19.0.0",
+    "react-scripts": "5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
