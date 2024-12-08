@@ -1,3 +1,4 @@
+import { buildConstArr } from '../../../utils/utils';
 import { getRandomInt, getRandomNumber } from './random';
 
 export const BOARD_SIZE = 4;
@@ -16,7 +17,7 @@ export function init() {
 }
 
 function buildZeroArr(size) {
-    return [...Array(size).keys()].map(_ => 0);
+    return buildConstArr(size, 0);
 }
 
 export function isGameWon(board) {

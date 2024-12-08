@@ -11,7 +11,7 @@ const BOARD_SIZE_CELL_STYLES = {
     16: {cellPxSize: 24, cellFontSize: 24}
 };
 
-export default function Board({ board, boardSize }) {
+export default function Board({ board, boardSize, cellStyles, onCellClick }) {
     if (!Object.keys(BOARD_SIZE_CELL_STYLES).includes(String(boardSize))) {
         console.error(`boardSize ${boardSize} is invalid, must be one of: ${Object.keys(BOARD_SIZE_CELL_STYLES)}`);
         return (<div>Invalid Board Size</div>);
@@ -25,7 +25,10 @@ export default function Board({ board, boardSize }) {
                         {Object.keys(board[i]).map(
                             j => {
                                 const val = board[i][j];
-                                return <td key={j} style={{fontSize: cellFontSize + 'px'}}>
+                                let style = {fontSize: cellFontSize + 'px'};
+                                if (cellStyles != undefined) { style = { ...style, ...cellStyles[i][j] } };
+                                const onClick = () => {if (onCellClick != undefined) {onCellClick(i, j)}};
+                                return <td key={j} style={style} onClick={onClick}>
                                     <SquareCell text={val} pixelSize={cellPxSize}/>
                                 </td>
                             }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
-export default function SquareCell({ text, pixelSize }) {
-    const style = { width: pixelSize + 'px', height: pixelSize + 'px' }
+export default function SquareCell({ text, pixelSize}) {
+    const style = {width: pixelSize + 'px', height: pixelSize + 'px'};
     return (
         <Container>
             <Row>
