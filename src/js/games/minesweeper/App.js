@@ -3,7 +3,7 @@ import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 
 import Board from '../../components/DigitBoard';
 import { getPaddingStyle } from '../../utils/style';
-import { buildAdjacencies, buildMines, initMask, isGameWon, updateMask, BOARD_SIZE } from './utils/board';
+import { buildAdjacencies, buildMines, getCoveredSpaces, initMask, isGameWon, updateMask, BOARD_SIZE, NUM_MINES } from './utils/board';
 
 const GAME_STATE_PLAYING = 'Playing...';
 const GAME_STATE_GAME_OVER = 'Game Over!';
@@ -13,6 +13,7 @@ const NEW_GAME_BUTTON_LABEL = 'Reset';
 const COVERED_CELL_COLOR = 'black';
 const REVEALED_CELL_COLOR = 'lightgrey';
 const MINE_CELL_COLOR = 'red';
+const MINE_VICTORY_CELL_COLOR = 'blue';
 
 export default function App() {
     const [isGameOver, setIsGameOver] = useState(false);
@@ -40,6 +41,9 @@ export default function App() {
             if (val == 0) {
                 color = mines[i][j] ? MINE_CELL_COLOR : REVEALED_CELL_COLOR;
             }
+            if (wonGame && mines[i][j]) {
+                color = MINE_VICTORY_CELL_COLOR;
+            }
             return {backgroundColor: color};
         }));
     };
@@ -62,6 +66,9 @@ export default function App() {
             return wonGame ? GAME_STATE_WON : GAME_STATE_GAME_OVER;
         }
         return GAME_STATE_PLAYING;
+    };
+    const getRemainingSpaces = () => {
+        return getCoveredSpaces(mask) - NUM_MINES;
     };
     return (
         <Container>
@@ -86,6 +93,16 @@ export default function App() {
                             <tr>
                                 <td>
                                     {getGameState()}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total Mines: {NUM_MINES}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Remaining Spaces To Uncover: {getRemainingSpaces()}
                                 </td>
                             </tr>
                         </tbody>

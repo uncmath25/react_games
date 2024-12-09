@@ -1,9 +1,9 @@
 import { getRandomInt } from '../../../utils/random';
 import { buildConstArr } from '../../../utils/utils';
 
-export const NUM_MINES = 20;
 export const BOARD_SIZE = 12;
-export const MINE_ADJACENCY_VAL = -1;
+export const NUM_MINES = 20;
+const MINE_ADJACENCY_VAL = -1;
 
 export function buildMines() {
     const board = [...Array(BOARD_SIZE).keys()].map(_ => buildConstArr(BOARD_SIZE, 0));
@@ -78,10 +78,6 @@ function getRevealedNeighbors(mines, adjacencies, row, col) {
             if (!containsSubarray(neighbors, n) && !containsSubarray(neighborsToAdd, n)) { neighborsToAdd.push(n); }
         });
     }
-    // console.log(row);
-    // console.log(col);
-    // console.log(neighbors);
-    // console.log(neighborsToAdd);
     return neighbors
 }
 
@@ -89,6 +85,10 @@ function containsSubarray (arrOfArrs, arr) {
     return arrOfArrs.some(a => a.length === arr.length && a.every((val, i) => val === arr[i]));
 }
 
+export function getCoveredSpaces(mask) {
+    return mask.reduce((row_acc, row) => row_acc + row.reduce((col_acc, col) => col_acc + col, 0), 0);
+}
+
 export function isGameWon(mask) {
-    return NUM_MINES == mask.reduce((row_acc, row) => row_acc + row.reduce((col_acc, col) => col_acc + col, 0), 0);
+    return NUM_MINES == getCoveredSpaces(mask);
 }
