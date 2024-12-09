@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 
 import Board from '../../components/DigitBoard';
-import { init, initMask, BOARD_SIZE } from './utils/board';
 import { getPaddingStyle } from '../../utils/style';
+import { buildAdjacencies, buildMines, initMask, isGameWon, updateMask, BOARD_SIZE } from './utils/board';
 
 const GAME_STATE_PLAYING = 'Playing...';
 const GAME_STATE_GAME_OVER = 'Game Over!';
@@ -12,31 +12,50 @@ const NEW_GAME_BUTTON_LABEL = 'Reset';
 
 const COVERED_CELL_COLOR = 'black';
 const REVEALED_CELL_COLOR = 'lightgrey';
+const MINE_CELL_COLOR = 'red';
 
 export default function App() {
     const [isGameOver, setIsGameOver] = useState(false);
     const [wonGame, setWonGame] = useState(false);
-    const [board, setBoard] = useState(init());
-    const [boardMask, setBoardMask] = useState(initMask());
-    const resetGame = () => {
+    const [mines, setMines] = useState([]);
+    const [adjacencies, setAdjacencies] = useState([]);
+    const [mask, setMask] = useState([]);
+    useEffect(() => {
+        reset();
+    }, []);
+    const reset = () => {
+        const mines = buildMines();
         setIsGameOver(false);
         setWonGame(false);
-        setBoard(init());
-        setBoardMask(initMask());
+        setMines(mines);
+        setAdjacencies(buildAdjacencies(mines));
+        setMask(initMask());
     };
-    const formatBoard = (board) => {
-        return board.map(row => row.map(val => val != 0 ? String(val) : ''));
-    }
-    const getCellStyles = (boardMask) => {
-        return boardMask.map(row => row.map(val => {
-            return {backgroundColor: val == 1 ? COVERED_CELL_COLOR : REVEALED_CELL_COLOR};
+    const formatBoard = () => {
+        return adjacencies.map((row, i) => row.map((val, j) => mask[i][j] == 0 && val > 0 ? String(val) : ''));
+    };
+    const getCellStyles = () => {
+        return mask.map((row, i) => row.map((val, j) => {
+            let color = COVERED_CELL_COLOR;
+            if (val == 0) {
+                color = mines[i][j] ? MINE_CELL_COLOR : REVEALED_CELL_COLOR;
+            }
+            return {backgroundColor: color};
         }));
     };
     const onCellClick = (row, col) => {
-        console.log(`Cell (${row}, ${col}) was clicked, with value: ${board[row][col]}`);
-        const newBoardMask = [ ...boardMask ];
-        newBoardMask[row][col] = 0;
-        setBoardMask(newBoardMask);
+        if (isGameOver) { return; }
+        if (mask[row][col] == 0) { return; }
+        console.log(`Cell (${row}, ${col}) was clicked, with adjacency: ${adjacencies[row][col]}`);
+        setMask(updateMask([ ...mask ], mines, adjacencies, row, col));
+        if (mines[row][col]) { 
+            setIsGameOver(true);
+            return;
+        }
+        if (isGameWon(mask)) {
+            setIsGameOver(true);
+            setWonGame(true);
+        }
     };
     const getGameState = () => {
         if (isGameOver) {
@@ -51,15 +70,15 @@ export default function App() {
             </Row>
             <Row>
                 <Col xs={12} lg={8}>
-                    <Board board={formatBoard(board)} boardSize={BOARD_SIZE}
-                            cellStyles={getCellStyles(boardMask)} onCellClick={onCellClick}/>
+                    <Board board={formatBoard()} boardSize={BOARD_SIZE}
+                            cellStyles={getCellStyles()} onCellClick={onCellClick}/>
                 </Col>
                 <Col xs={12} lg={4}>
                     <Table bordered striped>
                         <tbody>
                             <tr>
                                 <td>
-                                    <Button variant="primary" onClick={() => resetGame()}>
+                                    <Button variant="primary" onClick={() => reset()}>
                                         {NEW_GAME_BUTTON_LABEL}
                                     </Button>
                                 </td>

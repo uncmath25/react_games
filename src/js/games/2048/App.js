@@ -58,7 +58,7 @@ export default function App() {
     const formatBoard = () => {
         return board.map(row => row.map(val => val != 0 ? String(val) : ''));
     }
-    const resetGame = () => {
+    const reset = () => {
         setIsGameOver(false);
         setWonGame(false);
         setMove("");
@@ -84,7 +84,7 @@ export default function App() {
                         <tbody>
                             <tr>
                                 <td>
-                                    <Button variant="primary" onClick={() => resetGame()}>
+                                    <Button variant="primary" onClick={() => reset()}>
                                         {NEW_GAME_BUTTON_LABEL}
                                     </Button>
                                 </td>

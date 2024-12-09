@@ -1,5 +1,5 @@
+import { getRandomInt } from '../../../utils/random';
 import { buildConstArr } from '../../../utils/utils';
-import { getRandomInt, getRandomNumber } from './random';
 
 export const BOARD_SIZE = 4;
 export const WIN_VALUE = 128;
@@ -9,8 +9,12 @@ export const MOVE_RIGHT = 'right';
 export const MOVE_DOWN = 'down';
 export const MOVE_UP = 'up';
 
+export const RANDOM_THRESHOLD = 0.7;
+export const RANDOM_VALUE_1 = 2;
+export const RANDOM_VALUE_2 = 4;
+
 export function init() {
-    var board = [...Array(BOARD_SIZE).keys()].map(_ => buildZeroArr(BOARD_SIZE));
+    const board = [...Array(BOARD_SIZE).keys()].map(_ => buildZeroArr(BOARD_SIZE));
     addRandomNumber(board);
     addRandomNumber(board);
     return board;
@@ -21,7 +25,7 @@ function buildZeroArr(size) {
 }
 
 export function isGameWon(board) {
-    var wonGame = false;
+    const wonGame = false;
     board.forEach((row, i) => row.forEach((val, j) => {if (val >= WIN_VALUE) { wonGame = true }}));
     return wonGame;
 }
@@ -32,7 +36,7 @@ export function isBoardFull(board) {
 }
 
 function findEmptyIndices(board) {
-    var emptyIndices = [];
+    const emptyIndices = [];
     board.forEach((row, i) => row.forEach((val, j) => {if (val == 0) { emptyIndices.push([i, j]) }}));
     return emptyIndices;
 }
@@ -116,4 +120,8 @@ function addRandomNumber(board) {
     const emptyIndex = emptyIndices[randomIndex];
     const randomNumber = getRandomNumber();
     board[emptyIndex[0]][emptyIndex[1]] = randomNumber;
+}
+
+function getRandomNumber() {
+    return Math.random() > RANDOM_THRESHOLD ? RANDOM_VALUE_2 : RANDOM_VALUE_1;
 }
