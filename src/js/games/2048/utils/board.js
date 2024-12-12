@@ -25,7 +25,7 @@ function buildZeroArr(size) {
 }
 
 export function isGameWon(board) {
-    const wonGame = false;
+    var wonGame = false;
     board.forEach((row, i) => row.forEach((val, j) => {if (val >= WIN_VALUE) { wonGame = true }}));
     return wonGame;
 }
